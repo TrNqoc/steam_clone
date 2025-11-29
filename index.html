@@ -81,7 +81,7 @@
       <div class="navbar">
         <a href="login.html" id="loginBtn">Đăng nhập</a>
         <a href="register.html" id="registerBtn">Đăng kí</a>
-        <span id="username" style="display: none"></span>
+        <div id="navUser"></div>
         <a href="wishlist.html" id="wishlistLink" style="display: none"
           >Wishlist</a
         >
@@ -98,5 +98,32 @@
     </main>
 
     <script type="module" src="./app.js"></script>
+    <script type="module">
+      import { getCurrentUser, logoutUser } from "./storage.js";
+
+      const navUser = document.getElementById("navUser");
+      const user = getCurrentUser();
+
+      // Nếu đã login
+      if (user) {
+        navUser.innerHTML = `
+      <span>Xin chào, <b>${user}</b></span>
+      <a href="wishlist.html" class="nav-link">Wishlist</a>
+      <button id="logoutBtn">Đăng xuất</button>
+    `;
+
+        // xử lý logout
+        document.getElementById("logoutBtn").onclick = () => {
+          logoutUser();
+          window.location.reload();
+        };
+      } else {
+        // Nếu chưa login
+        navUser.innerHTML = `
+      <a href="login.html">Đăng nhập</a>
+      <a href="register.html">Đăng ký</a>
+    `;
+      }
+    </script>
   </body>
 </html>
