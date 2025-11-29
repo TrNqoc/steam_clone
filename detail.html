@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Game Detail</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <style>
+        body {
+            background: #0b0c10;
+            color: white;
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: auto;
+        }
+        .banner {
+            width: 100%;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        .screenshots {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            margin-top: 20px;
+        }
+        .screenshots img {
+            width: 260px;
+            border-radius: 8px;
+        }
+        .info-box {
+            background: #1f2833;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+        a.back {
+            color: #66fcf1;
+            font-size: 18px;
+            text-decoration: none;
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <a href="index.html" class="back">← Back to Home</a>
+
+    <h1 id="title"></h1>
+    <img id="banner" class="banner">
+
+    <div class="info-box">
+        <h2>About</h2>
+        <p id="description"></p>
+
+        <h3>Genres:</h3>
+        <p id="genres"></p>
+
+        <h3>Rating:</h3>
+        <p id="rating"></p>
+    </div>
+
+    <h2>Screenshots</h2>
+    <div id="screenshots" class="screenshots"></div>
+
+</div>
+
+<script type="module" src="./detail.js"></script>
+<script src="./api.js"></script>
+<script src="./storage.js"></script>
+<script src="./utils.js"></script>
+<script src="./wishlist.js"></script>
+
+</body>
+</html>

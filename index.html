@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Steam Clone</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="styles.css" />
+
+    <style>
+      body {
+        background: #0b0c10;
+        color: white;
+        font-family: Arial, sans-serif;
+      }
+      header {
+        padding: 20px;
+        background: #1f2833;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      #search {
+        padding: 10px 15px;
+        width: 500px;
+        border-radius: 6px;
+        outline: none;
+        border: none;
+      }
+      .games-section {
+        padding: 20px;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 20px;
+      }
+      .game-card {
+        display: grid;
+        background: #1f2833;
+        padding: 10px;
+        border-radius: 8px;
+        transition: 0.2s;
+      }
+      .game-card:hover {
+        transform: scale(1.05);
+      }
+      img {
+        width: 230px;
+        border-radius: 6px;
+      }
+      button {
+        height: 50px;
+        margin-top: 6px;
+        width: 230px;
+        padding: 8px;
+        border: none;
+        background: #66fcf1;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: bold;
+      }
+      .navbar a {
+        text-decoration: none;
+        color: white;
+        padding: 30px;
+      }
+      .navbar a:hover {
+        color: red;
+      }
+      header h1 a {
+        text-decoration: none;
+        color: white;
+      }
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <h1><a href="index.html">Steam Clone</a></h1>
+      <input id="search" placeholder="Search games…" />
+      <div class="navbar">
+        <a href="login.html" id="loginBtn">Đăng nhập</a>
+        <a href="register.html" id="registerBtn">Đăng kí</a>
+        <span id="username" style="display: none"></span>
+        <a href="wishlist.html" id="wishlistLink" style="display: none"
+          >Wishlist</a
+        >
+      </div>
+    </header>
+
+    <main>
+      <section class="games-section">
+        <h2>Popular Games</h2>
+        <div id="popular-grid" class="grid"></div>
+        <h2>Top Rated Games</h2>
+        <div id="toprated-grid" class="grid"></div>
+      </section>
+    </main>
+
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>
