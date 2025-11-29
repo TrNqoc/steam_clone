@@ -81,7 +81,7 @@
       <div class="navbar">
         <a href="login.html" id="loginBtn">Đăng nhập</a>
         <a href="register.html" id="registerBtn">Đăng kí</a>
-        <div id="navUser"></div>
+        <span id="username" style="display: none"></span>
         <a href="wishlist.html" id="wishlistLink" style="display: none"
           >Wishlist</a
         >
@@ -98,32 +98,190 @@
     </main>
 
     <script type="module" src="./app.js"></script>
-    <script type="module">
-      import { getCurrentUser, logoutUser } from "./storage.js";
+    //// Nếu người dùng đăng đăng nhập. if (localStorage.getItem("currentUser"))
+    { document.querySelector("#avatar-action-container").innerHTML += /*html*/ `
+    <div tabindex="0" class="avatar-action">
+      <img
+      src="${`https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(
+      JSON.parse(localStorage.getItem("currentUser")).username )}`}" />
+      <div class="popup">
+        <button class="action-button" onclick="handleSignOut()">
+          <i class="fa-solid fa-right-from-bracket"></i>
+          <span> Logout</span>
+        </button>
+      </div>
+      <!DOCTYPE html>
+      <html lang="vi">
+        <head>
+          <meta charset="UTF-8" />
+          <title>Steam Clone</title>
+          <meta name="viewport" content="width=device-width, initial-scale=1" />
+          <link rel="stylesheet" href="styles.css" />
 
-      const navUser = document.getElementById("navUser");
-      const user = getCurrentUser();
+          <style>
+            body {
+              background: #0b0c10;
+              color: white;
+              font-family: Arial, sans-serif;
+            }
+            header {
+              padding: 20px;
+              background: #1f2833;
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+            }
+            #search {
+              padding: 10px 15px;
+              width: 500px;
+              border-radius: 6px;
+              outline: none;
+              border: none;
+            }
+            .games-section {
+              padding: 20px;
+            }
+            .grid {
+              display: grid;
+              grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+              gap: 20px;
+            }
+            .game-card {
+              display: grid;
+              background: #1f2833;
+              padding: 10px;
+              border-radius: 8px;
+              transition: 0.2s;
+            }
+            .game-card:hover {
+              transform: scale(1.05);
+            }
+            img {
+              width: 230px;
+              border-radius: 6px;
+            }
+            .navbar a {
+              text-decoration: none;
+              color: white;
+              padding: 30px;
+            }
+            .navbar a:hover {
+              color: red;
+            }
+            header h1 a {
+              text-decoration: none;
+              color: white;
+            }
 
-      // Nếu đã login
-      if (user) {
-        navUser.innerHTML = `
-      <span>Xin chào, <b>${user}</b></span>
-      <a href="wishlist.html" class="nav-link">Wishlist</a>
-      <button id="logoutBtn">Đăng xuất</button>
-    `;
+            /* Avatar popup */
+            .avatar-action {
+              position: relative;
+              cursor: pointer;
+            }
+            .avatar-action img {
+              width: 40px;
+              height: 40px;
+              border-radius: 50%;
+            }
+            .avatar-action .popup {
+              position: absolute;
+              right: 0;
+              top: 45px;
+              padding: 10px;
+              background: #1f2833;
+              border-radius: 6px;
+              display: none;
+            }
+            .avatar-action:hover .popup {
+              display: block;
+            }
+            .action-button {
+              background: none;
+              border: none;
+              color: white;
+              cursor: pointer;
+              font-size: 16px;
+            }
+          </style>
+        </head>
 
-        // xử lý logout
-        document.getElementById("logoutBtn").onclick = () => {
-          logoutUser();
-          window.location.reload();
-        };
-      } else {
-        // Nếu chưa login
-        navUser.innerHTML = `
-      <a href="login.html">Đăng nhập</a>
-      <a href="register.html">Đăng ký</a>
-    `;
-      }
-    </script>
+        <body>
+          <header>
+            <h1><a href="index.html">Steam Clone</a></h1>
+            <input id="search" placeholder="Search games…" />
+
+            <!-- avatar-container mới thay cho navbar cũ -->
+            <div class="navbar" id="avatar-action-container"></div>
+          </header>
+
+          <main>
+            <section class="games-section">
+              <h2>Popular Games</h2>
+              <div id="popular-grid" class="grid"></div>
+              <h2>Top Rated Games</h2>
+              <div id="toprated-grid" class="grid"></div>
+            </section>
+          </main>
+
+          <script type="module" src="./app.js"></script>
+
+          <!-- SCRIPT XỬ LÝ LOGIN + AVATAR -->
+          <script>
+            // Hàm logout
+            function handleSignOut() {
+              localStorage.removeItem("currentUser");
+              localStorage.removeItem("cart");
+              location.reload();
+            }
+
+            const container = document.getElementById(
+              "avatar-action-container"
+            );
+            container.innerHTML = ""; // clear cũ
+
+            // Kiểm tra đăng nhập
+            const current = localStorage.getItem("currentUser");
+
+            if (current) {
+              const user = JSON.parse(current);
+
+              container.innerHTML = `
+        <div class="avatar-action">
+          <img src="https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(
+            user.username
+          )}" />
+          <div class="popup">
+            <button class="action-button" onclick="handleSignOut()">
+              <i class="fa-solid fa-right-from-bracket"></i> Logout
+            </button>
+          </div>
+        </div>`;
+            } else {
+              // nếu chưa login
+              container.innerHTML = `
+          <a style="font-size: 24px" href="./login.html">
+            <i class="fa-solid fa-right-to-bracket"></i> Login
+          </a>
+          <a style="font-size: 24px" href="./register.html">
+            <i class="fa-solid fa-user-plus"></i> Register
+          </a>
+        `;
+            }
+          </script>
+
+          <!-- Font Awesome Icons -->
+          <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"
+            crossorigin="anonymous"
+          ></script>
+        </body>
+      </html>
+    </div>
+    `; } else { document.querySelector("#avatar-action-container").innerHTML +=
+    /*html*/ `
+    <a style="font-size: 25px" href="./login.html">
+      <i class="fa-solid fa-right-to-bracket"></i>
+    </a>
+    `; }
   </body>
 </html>
